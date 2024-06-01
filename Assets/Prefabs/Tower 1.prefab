@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &563813077213765925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4954303387136881637}
+  m_Layer: 9
+  m_Name: Fire Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4954303387136881637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563813077213765925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.26, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2886425135843887989}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &856760081057330155
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2886425135843887989}
   - component: {fileID: 5039346083514550759}
-  m_Layer: 0
+  - component: {fileID: 2560087718467568704}
+  m_Layer: 9
   m_Name: Tower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,6 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7437576434118959852}
+  - {fileID: 4954303387136881637}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5039346083514550759
@@ -45,6 +78,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472f9d24b8638884a9705ea81ba9cbf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 405636382321467181, guid: b837bb36fdbaad3499ac89774b856b37, type: 3}
+  firePoint: {fileID: 4954303387136881637}
+  initUpgradeCost: 50
+  upgradeCostMultiplier: 4
+  initAttackRange: 15
+  initAttackSpeed: 1
+  initAttackPower: 10
+  attackRangeUpgradeMultiplier: 1.25
+  attackSpeedUpgradeMultiplier: 0.85
+  attackPowerUpgradeMultiplier: 2
+  levelCap: 3
+  currentUpgradeCost: 0
+  currentAttackRange: 0
+  currentAttackSpeed: 0
+  currentAttackPower: 0
+  currentLevel: 0
+  enemyList: []
+  IsCapped: 0
+--- !u!135 &2560087718467568704
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856760081057330155}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1536
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3083182882511347741
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +128,7 @@ GameObject:
   - component: {fileID: 7437576434118959852}
   - component: {fileID: 1072256077015888515}
   - component: {fileID: 3538175471718326909}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}

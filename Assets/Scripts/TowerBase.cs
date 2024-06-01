@@ -1,15 +1,21 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TowerBase : IInteractable
 {
+    [Header("References")]
     [SerializeField] private Transform menuPanel;
     [SerializeField] private Transform buildPanel;
-    [SerializeField] private Transform managePanel;
+    [SerializeField] private Transform upgradePanel;
     [SerializeField] private Transform towerHolder;
+    [SerializeField] private TMP_Text upgradeCostText;
+    [SerializeField] private Button upgradeButton;
     [SerializeField] private List<Tower> towerPrefabs;
 
-    private Tower currentTower;
+    [Header("Read Only")]
+    [SerializeField] private Tower currentTower;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,7 +33,7 @@ public class TowerBase : IInteractable
         }
     }
 
-    public void BuildTower(int prefabIndex)
+    public void TryBuildTower(int prefabIndex)
     {
         switch (prefabIndex)
         {
@@ -35,9 +41,7 @@ public class TowerBase : IInteractable
                 {
                     if (TrySpendResources(25, 0, 0))
                     {
-                        currentTower = Instantiate(towerPrefabs[prefabIndex], towerHolder);
-                        buildPanel.gameObject.SetActive(false);
-                        managePanel.gameObject.SetActive(true);
+                        BuildTower(prefabIndex);
                     }                    
                     break;
                 }
@@ -45,34 +49,26 @@ public class TowerBase : IInteractable
                 {
                     if (TrySpendResources(200, 50, 0))
                     {
-                        currentTower = Instantiate(towerPrefabs[prefabIndex], towerHolder);
-                        buildPanel.gameObject.SetActive(false);
-                        managePanel.gameObject.SetActive(true);
+                        BuildTower(prefabIndex);
                     }
                     break;
                 }
-                /*
             case 2:
                 {
-                    if (TrySpendResources(500, 1000, 100))
+                    if (TrySpendResources(1000, 250, 100))
                     {
-                        currentTower = Instantiate(towerPrefabs[prefabIndex], towerHolder);
-                        buildPanel.gameObject.SetActive(false);
-                        managePanel.gameObject.SetActive(true);
+                        BuildTower(prefabIndex);
                     }
                     break;
                 }
             case 3:
                 {
-                    if (TrySpendResources(1000, 0, 500))
+                    if (TrySpendResources(0, 1000, 500))
                     {
-                        currentTower = Instantiate(towerPrefabs[prefabIndex], towerHolder);
-                        buildPanel.gameObject.SetActive(false);
-                        managePanel.gameObject.SetActive(true);
+                        BuildTower(prefabIndex);
                     }
                     break;
                 }
-                */
             default: break;
         }
 
@@ -95,9 +91,33 @@ public class TowerBase : IInteractable
         return false;
     }
 
+    private void BuildTower(int prefabIndex)
+    {
+        currentTower = Instantiate(towerPrefabs[prefabIndex], towerHolder);
+        upgradeCostText.text = $"{currentTower.CurrentUpgradeCost}";
+        buildPanel.gameObject.SetActive(false);
+        upgradePanel.gameObject.SetActive(true);
+    }
+
+    public void Upgrade()
+    {
+        if(!currentTower.IsCapped && ResourcesInventory.Instance.RemoveResource(ResourceType.Gems, currentTower.CurrentUpgradeCost))
+        {
+            currentTower.Upgrade();
+            if(!currentTower.IsCapped)
+            {
+                upgradeCostText.text = $"{currentTower.CurrentUpgradeCost}";
+            }
+            else
+            {
+                upgradeButton.gameObject.SetActive(false);
+            }
+        }
+    }
+
     public void DestroyTower()
     {
-        managePanel.gameObject.SetActive(false);
+        upgradePanel.gameObject.SetActive(false);
         buildPanel.gameObject.SetActive(true);
         currentTower.transform.SetParent(null);
         Destroy(currentTower.gameObject);

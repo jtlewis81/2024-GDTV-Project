@@ -5,6 +5,9 @@ public class ResourcesInventory : MonoBehaviour
 {
     public static ResourcesInventory Instance;
 
+    [Header("Settings")]
+    [SerializeField] private int startingGems = 50;
+
     [Header("References")]
     [SerializeField] private TMP_Text woodQtyText;
     [SerializeField] private TMP_Text stoneQtyText;
@@ -15,12 +18,7 @@ public class ResourcesInventory : MonoBehaviour
     [SerializeField] private int woodQty = 0;
     [SerializeField] private int stoneQty = 0;
     [SerializeField] private int metalQty = 0;
-    [SerializeField] private int gemsQty = 100;
-
-    public TMP_Text WoodQtyText { get { return woodQtyText; } }
-    public TMP_Text StoneQtyText { get { return stoneQtyText; } }
-    public TMP_Text MetalQtyText { get { return metalQtyText; } }
-    public TMP_Text GemsQtyText { get { return gemsQtyText; } }
+    [SerializeField] private int gemsQty = 0;
 
     public int WoodQty => woodQty;
     public int StoneQty => stoneQty;
@@ -39,6 +37,8 @@ public class ResourcesInventory : MonoBehaviour
 
     private void Start()
     {
+        gemsQty = startingGems;
+
         woodQtyText.text = $"{woodQty}";
         stoneQtyText.text = $"{stoneQty}";
         metalQtyText.text = $"{metalQty}";

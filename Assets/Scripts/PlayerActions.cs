@@ -21,16 +21,23 @@ public class PlayerActions : MonoBehaviour
 
     private void Update()
     {
+        GetMoveInput();
+
+    }
+
+
+    private void GetMoveInput()
+    {
         if (InputManager.Instance.GetRightMouseButtonDown()) // handle right click movement
         {
             Transform currentTargetObject = targetObject; // cache previous target object in case targeting different one
-            
+
             Transform newTargetObject = MouseWorld.GetObject(); // see if target is object
 
             // target is not an object
             if (newTargetObject == null)
             {
-                if(currentTargetObject != null) // had previous target object that needs cleared
+                if (currentTargetObject != null) // had previous target object that needs cleared
                 {
                     targetObject = null; // remove previously targeted object
                 }
@@ -46,9 +53,7 @@ public class PlayerActions : MonoBehaviour
                 targetPosition = targetObject.position; // set target position to targeted object's position (prevents running around objects to interact)
                 navMeshAgent.destination = targetPosition; // move to target object
             }
-            
+
         }
-
     }
-
 }
