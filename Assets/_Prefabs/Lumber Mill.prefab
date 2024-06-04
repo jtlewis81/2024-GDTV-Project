@@ -1304,9 +1304,9 @@ MonoBehaviour:
   upgradePanel: {fileID: 1082295328100552192}
   resourceType: 1
   unlockCost: 50
-  initProductionRate: 1
+  initProductionRate: 2
   initUpgradeCost: 50
-  productionUpgradeMultiplier: 5
+  productionUpgradeMultiplier: 3
   upgradeCostMultiplier: 3
   currentUpgradeCost: 0
   currentProductionRate: 0

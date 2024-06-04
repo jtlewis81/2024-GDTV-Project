@@ -117,6 +117,7 @@ public class TowerBase : IInteractable
 
     public void DestroyTower()
     {
+        upgradeButton.gameObject.SetActive(true);
         upgradePanel.gameObject.SetActive(false);
         buildPanel.gameObject.SetActive(true);
         currentTower.transform.SetParent(null);

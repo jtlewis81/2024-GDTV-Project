@@ -23,9 +23,15 @@ public class Health : MonoBehaviour
         CurrentHP -= damage;
         if(CurrentHP <= 0)
         {
+            if(GetComponent<Gate>() != null)
+            {
+                GameManager.GameOver = true;
+            }
+
             DropGems drop = GetComponent<DropGems>();
             if(drop != null)
             {
+                GameManager.EnemyCount--;
                 drop.Drop();
             }
 

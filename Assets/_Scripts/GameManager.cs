@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public static int EnemyCount = 0;
     [field: SerializeField] public static int KillCount = 0;
 
-    private int[] stages = new int[] { 0, 200, 350, 500, 600, 750 };
+    private int[] stages = new int[] { 0, 200, 350, 500};
     private int stage = 0;
 
     private void Awake()

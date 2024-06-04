@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 4f;
-    [SerializeField] private float playerTargetingRadius = 5f;
+    //[SerializeField] private float playerTargetingRadius = 5f;
     [SerializeField] private float attackDistance = 1.5f;
     [SerializeField] private float attackSpeed = 1f; // time in seconds to count down between attacks
     [SerializeField] private int attackPower = 10;
@@ -17,12 +17,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool isAttacking = false;
 
     private NavMeshAgent navMeshAgent;
+    private Animator animator;
     private float attackTimer = 0f;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -39,12 +41,14 @@ public class Enemy : MonoBehaviour
         if(gate == null)
         {
             targetObject = null;
+            animator.SetBool("gameOver", true);
             navMeshAgent.destination = transform.position;
             return;
         }
         else if (Vector3.Distance(transform.position, targetObject.position) <= attackDistance) // arrived at target => set state
         {
             isAttacking = true;
+            animator.SetBool("isAttacking", true);
             navMeshAgent.destination = transform.position;
         }
 
@@ -107,13 +111,14 @@ public class Enemy : MonoBehaviour
     */
     private void HandleAttacking() // fires off every time the timer gets to 0
     {
-        if (targetObject != null && Vector3.Distance(transform.position, targetObject.position) <= playerTargetingRadius) // double check that target exists
+        if (targetObject != null && Vector3.Distance(transform.position, targetObject.position) <= attackDistance) // double check that target exists and is in range
         {
             targetObject.GetComponent<Health>().TakeDamage(attackPower);
         }
-        else // if target is gone, stop attacking
+        else // if target is gone/moved, stop attacking
         {
             isAttacking = false;
+            animator.SetBool("isAttacking", false);
         }
     }
 }
